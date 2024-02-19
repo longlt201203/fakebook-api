@@ -1,1 +1,1 @@
-export * from "./sample.entity";
+export * from "./account.entity";

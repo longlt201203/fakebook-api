@@ -9,4 +9,5 @@ export class Env {
     static readonly DB_NAME = process.env.DB_NAME || "";
     static readonly DB_USER = process.env.DB_USER || "";
     static readonly DB_PASS = process.env.DB_PASS || "";
+    static readonly KEY_PAIR_FOLDER = process.env.KEY_PAIR_FOLDER || "keys";
 }

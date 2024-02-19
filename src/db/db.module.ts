@@ -4,12 +4,13 @@ import { Env } from '@utils';
 
 @Module({
     imports: [TypeOrmModule.forRoot({
-        // type: ""
+        type: "mysql",
         host: Env.DB_HOST,
         port: Env.DB_PORT,
         database: Env.DB_NAME,
         username: Env.DB_USER,
-        password: Env.DB_PASS
+        password: Env.DB_PASS,
+        entities: ["./entities/*.entity{.js,.ts}"]
     })]
 })
 export class DbModule {}
