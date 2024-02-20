@@ -12,8 +12,8 @@ export class CryptoModule {
     }
 
     const { publicKey, privateKey } = generateKeyPairSync("rsa", { modulusLength: 2048 });
-    fs.writeFileSync(privateKeyPath, privateKey.export(), "base64");
-    fs.writeFileSync(publicKeyPath, publicKey.export(), "base64");
+    fs.writeFileSync(privateKeyPath, privateKey.export({ format: "pem", type: "pkcs1" }));
+    fs.writeFileSync(publicKeyPath, publicKey.export({ format: "pem", type: "pkcs1" }));
   }
 
   static register(): DynamicModule {

@@ -10,4 +10,8 @@ export class Env {
     static readonly DB_USER = process.env.DB_USER || "";
     static readonly DB_PASS = process.env.DB_PASS || "";
     static readonly KEY_PAIR_FOLDER = process.env.KEY_PAIR_FOLDER || "keys";
+    static readonly HMAC_SECRET = process.env.HMAC_SECRET || "";
+    static readonly JWT_SECRET = process.env.JWT_SECRET || "";
+    static readonly JWT_ISSUER = process.env.JWT_ISSUER || "";
+    static readonly JWT_EXPIRE = process.env.JWT_EXPIRE || "";
 }

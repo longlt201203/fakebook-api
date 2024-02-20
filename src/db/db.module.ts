@@ -1,16 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Env } from '@utils';
+import { datasource } from './datasource';
 
 @Module({
-    imports: [TypeOrmModule.forRoot({
-        type: "mysql",
-        host: Env.DB_HOST,
-        port: Env.DB_PORT,
-        database: Env.DB_NAME,
-        username: Env.DB_USER,
-        password: Env.DB_PASS,
-        entities: ["./entities/*.entity{.js,.ts}"]
-    })]
+    imports: [TypeOrmModule.forRoot(datasource.options)]
 })
 export class DbModule {}
