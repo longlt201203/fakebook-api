@@ -36,7 +36,7 @@ export class CryptoService {
             subject: subject,
             issuer: Env.JWT_ISSUER,
             expiresIn: Env.JWT_EXPIRE
-        })
+        });
     }
 
     verifyJwt(token: string) {

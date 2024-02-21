@@ -8,3 +8,8 @@ services:
     environment:
       MYSQL_DATABASE: fakebook
       MYSQL_ROOT_PASSWORD: Longquadeptrai@123
+    volumes:
+      - fakebok_db_vol:/var/lib/mysql
+
+volumes:
+  fakebok_db_vol:

@@ -2,9 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Env } from '@utils';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cors from "cors";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.use(cors({ origin: '*' }));
 
   const config = new DocumentBuilder()
     .setTitle('Fakebook')
