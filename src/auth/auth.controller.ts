@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, Req, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LoginWithUsernameAndPasswordDto } from "./dto/login-with-username-and-password.dto";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
@@ -22,5 +22,10 @@ export class AuthController {
     @UseGuards(AuthGuard)
     profile(@Req() request: Request) {
         return request.account;
+    }
+
+    @Get("login-with-google")
+    loginWithGoogle(@Query("credential") credential: string) {
+        return this.authService.loginWithGoogle(credential);
     }
 }

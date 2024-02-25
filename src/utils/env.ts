@@ -14,4 +14,6 @@ export class Env {
     static readonly JWT_SECRET = process.env.JWT_SECRET || "";
     static readonly JWT_ISSUER = process.env.JWT_ISSUER || "";
     static readonly JWT_EXPIRE = process.env.JWT_EXPIRE || "";
+    static readonly GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
+    static readonly GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "";
 }
