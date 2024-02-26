@@ -8,6 +8,6 @@ export class PaginationDto<T> {
     data: T[];
 
     from(data: T[]) {
-
+        
     }
 }

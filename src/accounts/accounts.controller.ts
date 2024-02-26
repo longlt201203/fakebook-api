@@ -1,21 +1,34 @@
-import { Body, Controller, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AccountDetailDto } from './dto/account-detail.dto';
+import { AuthGuard, ForRoles, Role, RoleGuard } from '@auth';
+import { DtoMapper, Request } from '@utils';
+import { AccountResponseDto } from './dto/account-response.dto';
 
 @Controller('accounts')
 @ApiTags("accounts")
 export class AccountsController {
-  constructor(private readonly accountsService: AccountsService) {}
+  constructor(
+    private readonly accountsService: AccountsService,
+  ) {}
 
-  @Post()
-  createAccount(@Body() dto: CreateAccountDto) {
-    return this.accountsService.createAccount(dto);
+  @Get(":id")
+  async getAccountById(@Param("id") id: string) {
+    return DtoMapper.mapOne(await this.accountsService.findById(id, { detail: true }), AccountResponseDto);
   }
 
-  @Put("detail/:id")
-  updateAccountDetail(@Param("id") id: string, @Body() dto: AccountDetailDto) {
-    return this.accountsService.updateDetail(id, dto);
+  @Post()
+  async createAccount(@Body() dto: CreateAccountDto) {
+    return DtoMapper.mapOne(await this.accountsService.createAccount(dto), AccountResponseDto);
+  }
+
+  @Put("detail")
+  @ForRoles([Role.USER])
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth()
+  async updateAccountDetail(@Req() req: Request, @Body() dto: AccountDetailDto) {
+    return DtoMapper.mapOne(await this.accountsService.updateDetail(req.account.id, dto), AccountResponseDto);
   }
 }
