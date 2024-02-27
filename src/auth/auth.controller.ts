@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, Req, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LoginWithUsernameAndPasswordDto } from "./dto/login-with-username-and-password.dto";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { Request } from "@utils";
+import { DtoMapper, Request } from "@utils";
 import { AuthGuard } from "./auth.guard";
+import { AccountResponseDto } from "@accounts";
 
 @Controller("auth")
 @ApiTags("auth")
@@ -21,6 +22,11 @@ export class AuthController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
     profile(@Req() request: Request) {
-        return request.account;
+        return DtoMapper.mapOne(request.account, AccountResponseDto);
+    }
+
+    @Get("login-with-google")
+    loginWithGoogle(@Query("credential") credential: string) {
+        return this.authService.loginWithGoogle(credential);
     }
 }

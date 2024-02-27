@@ -32,6 +32,8 @@
     "class-validator": "^0.14.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.2",
+    "google-auth-library": "^9.6.3",
+    "googleapis": "^133.0.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.1",
     "reflect-metadata": "^0.1.13",
