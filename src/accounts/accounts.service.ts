@@ -7,6 +7,7 @@ import { ValidationError } from 'class-validator';
 import { MyValidationError } from '@errors';
 import { CryptoService } from '@crypto';
 import { AccountDetailDto } from './dto/account-detail.dto';
+import { AccountFilterDto } from './dto/account-filter.dto';
 
 @Injectable()
 export class AccountsService {
@@ -108,5 +109,10 @@ export class AccountsService {
             throw new NotFoundException("Account not found");
         }
         return account;
+    }
+
+    async findAll(filter: AccountFilterDto): Promise<[Account[], number]> {
+        const [accounts, count] = await this.accountRepo.findAndCount({ relations: { detail: true }, take: filter.take, skip: filter.take*(filter.page-1) });
+        return [accounts, count];
     }
 }
