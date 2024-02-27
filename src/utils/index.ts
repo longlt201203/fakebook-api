@@ -4,3 +4,4 @@ export * from "./validation.pipe";
 export * from "./request";
 export * from "./dto-mapper.dto"
 export * from "./base-filter.dto";
+export * from "./pagination.dto";

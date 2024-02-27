@@ -4,10 +4,9 @@ import { CreateAccountDto } from './dto/create-account.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AccountDetailDto } from './dto/account-detail.dto';
 import { AuthGuard, ForRoles, Role, RoleGuard } from '@auth';
-import { DtoMapper, Request } from '@utils';
+import { DtoMapper, PaginationDto, Request } from '@utils';
 import { AccountResponseDto } from './dto/account-response.dto';
 import { AccountFilterDto } from './dto/account-filter.dto';
-import { PaginationDto } from 'src/utils/pagination.dto';
 
 @Controller('accounts')
 @ApiTags("accounts")
