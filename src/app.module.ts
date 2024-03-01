@@ -6,9 +6,10 @@ import { AccountsModule } from './accounts/accounts.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { MyExceptionFilter, ValidationPipe } from '@utils';
+import { LocalFilesModule } from './local-files/local-files.module';
 
 @Module({
-  imports: [DbModule, AccountsModule, AuthModule],
+  imports: [DbModule, AccountsModule, AuthModule, LocalFilesModule],
   controllers: [AppController],
   providers: [
     AppService,

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn } from "typeorm";
 import { AccountDetail } from "./account-detail.entity";
 import { Role } from "../../auth/enums";
 
@@ -15,6 +15,9 @@ export class Account {
 
     @Column({ type: "enum" ,enum: Role, default: Role.USER })
     role: Role;
+
+    @CreateDateColumn()
+    createdAt: Date;
 
     @OneToOne(() => AccountDetail, { cascade: true, nullable: true, orphanedRowAction: "delete" })
     @JoinColumn()
