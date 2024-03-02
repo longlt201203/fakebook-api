@@ -5,8 +5,9 @@ import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AuthGuard, CurrentUser, ForRoles, Role, RoleGuard } from '@auth';
 import { Account } from '@entities';
 import { PostFilterDto } from './dto/post-filter.dto';
-import { PaginationDto } from '@utils';
+import { DtoMapper, PaginationDto } from '@utils';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { PostResponseDto } from './dto/post-response.dto';
 
 @Controller('posts')
 @ApiTags("posts")
@@ -26,7 +27,7 @@ export class PostsController {
   @Get()
   async fetchPosts(@Query() filter: PostFilterDto) {
     const [posts, count] = await this.postsService.findAll(filter);
-    return PaginationDto.from(posts, filter, count);
+    return PaginationDto.from(DtoMapper.mapMany(posts, PostResponseDto), filter, count);
   }
 
   @Put(":id")
