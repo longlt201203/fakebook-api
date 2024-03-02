@@ -5,6 +5,8 @@ import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { DtoMapper, Request } from "@utils";
 import { AuthGuard } from "./auth.guard";
 import { AccountResponseDto } from "@accounts";
+import { CurrentUser } from "./decorators";
+import { Account } from "@entities";
 
 @Controller("auth")
 @ApiTags("auth")
@@ -21,8 +23,8 @@ export class AuthController {
     @Get("profile")
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
-    profile(@Req() request: Request) {
-        return DtoMapper.mapOne(request.account, AccountResponseDto);
+    profile(@CurrentUser() account: Account) {
+        return DtoMapper.mapOne(account, AccountResponseDto);
     }
 
     @Get("login-with-google")

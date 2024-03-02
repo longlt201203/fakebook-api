@@ -1,12 +1,13 @@
 import { Controller, Get, Param, Post, Req, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { LocalFilesService } from './local-files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { UploadFileDto } from './dto/upload-file.dto';
 import { Response } from 'express';
 import { Request } from '@utils';
 
 @Controller('local-files')
+@ApiTags("local-files")
 export class LocalFilesController {
   constructor(private readonly localFilesService: LocalFilesService) {}
 

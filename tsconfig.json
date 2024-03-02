@@ -25,7 +25,8 @@
       "@crypto": ["src/crypto"],
       "@accounts": ["src/accounts"],
       "@auth": ["src/auth"],
-      "@local-files": ["src/local-files"]
+      "@local-files": ["src/local-files"],
+      "@posts": ["src/posts"]
     }
   }
 }

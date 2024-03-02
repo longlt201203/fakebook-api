@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn, OneToMany } from "typeorm";
 import { AccountDetail } from "./account-detail.entity";
 import { Role } from "../../auth/enums";
+import { Post } from "./post.entity";
 
 @Entity()
 export class Account {
@@ -22,4 +23,7 @@ export class Account {
     @OneToOne(() => AccountDetail, { cascade: true, nullable: true, orphanedRowAction: "delete" })
     @JoinColumn()
     detail: AccountDetail;
+
+    @OneToMany(() => Post, post => post.author)
+    posts: Post[];
 }
