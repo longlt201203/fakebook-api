@@ -24,7 +24,9 @@
       // Remember to update when adding new resource
       "@crypto": ["src/crypto"],
       "@accounts": ["src/accounts"],
-      "@auth": ["src/auth"]
+      "@auth": ["src/auth"],
+      "@local-files": ["src/local-files"],
+      "@posts": ["src/posts"]
     }
   }
 }

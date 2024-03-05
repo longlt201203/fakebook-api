@@ -16,4 +16,7 @@ export class AccountDetail {
 
     @Column()
     email: string;
+
+    @Column({ type: "text", nullable: true })
+    avt: string;
 }

@@ -12,7 +12,7 @@ export class RoleGuard implements CanActivate {
     async canActivate(ctx: ExecutionContext) {
         const req = ctx.switchToHttp().getRequest<Request>();
         const roles = this.reflector.get(ForRoles, ctx.getHandler());
-        if (req.account && roles.includes(req.account.role)) return true;
+        if (req.account && (roles && roles.includes(req.account.role))) return true;
         return false;
     }
 }

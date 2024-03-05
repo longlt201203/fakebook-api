@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Expose } from "class-transformer";
-import { IsEmail, IsNotEmpty, IsNumber, IsString, Max, Min } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
 
 export class AccountDetailDto {
     @ApiProperty()
@@ -27,4 +27,9 @@ export class AccountDetailDto {
     @IsEmail()
     @Expose()
     email: string;
+
+    @ApiProperty({ nullable: true })
+    @IsString()
+    @Expose()
+    avt: string | null;
 }

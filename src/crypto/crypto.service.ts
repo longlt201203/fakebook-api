@@ -1,4 +1,3 @@
-import { Account } from '@entities';
 import { Inject, Injectable } from '@nestjs/common';
 import { Env } from '@utils';
 import { createSign, createVerify, createHmac } from "node:crypto";
