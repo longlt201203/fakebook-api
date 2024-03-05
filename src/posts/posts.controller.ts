@@ -24,6 +24,12 @@ export class PostsController {
     return { message: "Create post successfully!" };
   }
 
+  @Get("fetch-by-account-id/:accountId")
+  async fetchByAccountId(@Param("accountId") accountId: string, @Query() filter: PostFilterDto) {
+    const [posts, count] = await this.postsService.findByAccountId(accountId, filter);
+    return PaginationDto.from(DtoMapper.mapMany(posts, PostResponseDto), filter, count);
+  }
+
   @Get()
   async fetchPosts(@Query() filter: PostFilterDto) {
     const [posts, count] = await this.postsService.findAll(filter);

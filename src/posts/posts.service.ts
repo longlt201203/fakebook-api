@@ -27,6 +27,14 @@ export class PostsService {
         return this.postRepo.findAndCount({ relations: { author: { detail: true } }, take: dto.take, skip: dto.take*(dto.page-1) }); 
     }
 
+    findByAccountId(accountId: string, dto: PostFilterDto) {
+        return this.postRepo.findAndCount({ where: {
+            author: {
+                id: accountId
+            }
+        }, relations: { author: { detail: true } }, take: dto.take, skip: dto.take*(dto.page-1) });
+    }
+
     async findOne(id: number, relations?: FindOptionsRelations<Post>) {
         const post = await this.postRepo.findOne({ where: { id: id }, relations: relations });
         if (!post) {

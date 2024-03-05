@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { AccountDetail } from "./account-detail.entity";
 import { Role } from "../../auth/enums";
 import { Post } from "./post.entity";
+import { FriendRequest } from "./friend-request.entity";
 
 @Entity()
 export class Account {
@@ -26,4 +27,7 @@ export class Account {
 
     @OneToMany(() => Post, post => post.author)
     posts: Post[];
+
+    @OneToMany(() => FriendRequest, fr => fr.to)
+    friendRequests: FriendRequest[];
 }

@@ -16,6 +16,9 @@ export class AccountsController {
   ) {}
 
   @Get(":id")
+  @ForRoles([Role.ADMIN, Role.USER])
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth()
   async getAccountById(@Param("id") id: string) {
     return DtoMapper.mapOne(await this.accountsService.findById(id, { detail: true }), AccountResponseDto);
   }
