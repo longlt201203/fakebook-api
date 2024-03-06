@@ -1,4 +1,4 @@
 export enum AccountRelationshipType {
-    FRIEND,
-    BLOCKED
+    FRIEND = "0",
+    BLOCKED = "1"
 }

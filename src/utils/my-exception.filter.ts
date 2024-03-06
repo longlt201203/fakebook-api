@@ -1,6 +1,7 @@
 import { MyValidationError } from "@errors";
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
 import { Response } from "express";
+import { QueryFailedError } from "typeorm";
 
 @Catch()
 export class MyExceptionFilter implements ExceptionFilter {
@@ -15,6 +16,9 @@ export class MyExceptionFilter implements ExceptionFilter {
         } else if (exception instanceof HttpException) {
             status = exception.getStatus();
             data = exception.getResponse();
+        } else if (exception instanceof QueryFailedError) {
+            status = HttpStatus.BAD_REQUEST;
+            data = { message: exception.message };
         } else {
             console.error(exception);
         }

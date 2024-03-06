@@ -8,9 +8,10 @@ import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { MyExceptionFilter, ValidationPipe } from '@utils';
 import { LocalFilesModule } from './local-files/local-files.module';
 import { PostsModule } from './posts/posts.module';
+import { RelationshipsModule } from './relationships/relationships.module';
 
 @Module({
-  imports: [DbModule, AccountsModule, AuthModule, LocalFilesModule, PostsModule],
+  imports: [DbModule, AccountsModule, AuthModule, LocalFilesModule, PostsModule, RelationshipsModule],
   controllers: [AppController],
   providers: [
     AppService,

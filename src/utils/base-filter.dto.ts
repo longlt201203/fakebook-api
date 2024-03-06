@@ -3,12 +3,12 @@ import { Type } from "class-transformer";
 import { IsNumber } from "class-validator";
 
 export class BaseFilterDto {
-    @ApiProperty()
+    @ApiProperty({ example: 1 })
     @IsNumber()
     @Type(() => Number)
     page: number;
 
-    @ApiProperty()
+    @ApiProperty({ example: 10 })
     @IsNumber()
     @Type(() => Number)
     take: number;
