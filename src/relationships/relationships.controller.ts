@@ -6,6 +6,8 @@ import { RelationshipFilterDto } from './dto/relationship-filter.dto';
 import { DtoMapper, PaginationDto } from '@utils';
 import { AccountResponseDto } from '@accounts';
 import { Account } from '@entities';
+import { FriendRequestFilterDto } from './dto/friend-request-filter.dto';
+import { FriendRequestResponseDto } from './dto/friend-request-response.dto';
 
 @Controller('relationships')
 @ApiTags("relationships")
@@ -26,6 +28,12 @@ export class RelationshipsController {
     return PaginationDto.from(DtoMapper.mapMany(blockedUsers, AccountResponseDto), filter, count);
   }
 
+  @Get("friend-requests")
+  async getFriendRequests(@CurrentUser() account: Account, @Query() dto: FriendRequestFilterDto) {
+    const [frs, count] = await this.relationshipsService.getFriendRequests(account.id, dto);
+    return PaginationDto.from(DtoMapper.mapMany(frs, FriendRequestResponseDto), dto, count);
+  }
+
   @Get("add-friend")
   async addFriend(@CurrentUser() account: Account, @Query("accountId") accountId: string) {
     await this.relationshipsService.createFriendRequest(account.id, accountId);
@@ -36,6 +44,12 @@ export class RelationshipsController {
   async acceptFriendRequest(@CurrentUser() account: Account, @Query("frId") frId: string) {
     await this.relationshipsService.acceptFriendRequest(account.id, +frId);
     return { message: "Accept friend request successfully!" };
+  }
+
+  @Get("remove-friend-request")
+  async removeFriendRequest(@Query("frId") frId: string) {
+    await this.relationshipsService.removeFriendRequest(+frId);
+    return { message: "Remove friend request successfully!" };
   }
 
   @Get("unfriend")
