@@ -38,7 +38,7 @@ export class RelationshipsService {
     }
 
     removeFriendRequest(id: number) {
-        return this.friendRequestRepo.delete(id);
+        return this.friendRequestRepo.delete({ id: id });
     }
 
     createRelationShip(dto: CreateRelationshipDto) {
