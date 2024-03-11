@@ -9,9 +9,10 @@ import { MyExceptionFilter, ValidationPipe } from '@utils';
 import { LocalFilesModule } from './local-files/local-files.module';
 import { PostsModule } from './posts/posts.module';
 import { RelationshipsModule } from './relationships/relationships.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
-  imports: [DbModule, AccountsModule, AuthModule, LocalFilesModule, PostsModule, RelationshipsModule],
+  imports: [DbModule, AccountsModule, AuthModule, LocalFilesModule, PostsModule, RelationshipsModule, AnalyticsModule],
   controllers: [AppController],
   providers: [
     AppService,

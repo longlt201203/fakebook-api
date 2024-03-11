@@ -8,6 +8,7 @@ import { MyValidationError } from '@errors';
 import { CryptoService } from '@crypto';
 import { AccountDetailDto } from './dto/account-detail.dto';
 import { AccountFilterDto } from './dto/account-filter.dto';
+import { faker } from '@faker-js/faker';
 
 @Injectable()
 export class AccountsService {
@@ -114,5 +115,18 @@ export class AccountsService {
     async findAll(filter: AccountFilterDto): Promise<[Account[], number]> {
         const [accounts, count] = await this.accountRepo.findAndCount({ relations: { detail: true }, take: filter.take, skip: filter.take*(filter.page-1) });
         return [accounts, count];
+    }
+
+    fakeOne() {
+        const account = Account.fakeOne(this.cryptoService.signSomething(faker.internet.password()));
+        return account;
+    }
+
+    async fake100Accounts() {
+        const accounts = [];
+        for (let i = 0; i < 100; i++) {
+            accounts.push(this.fakeOne());
+        }
+        await this.accountRepo.save(accounts);
     }
 }

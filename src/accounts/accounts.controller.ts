@@ -15,6 +15,12 @@ export class AccountsController {
     private readonly accountsService: AccountsService,
   ) {}
 
+  @Get("fake100")
+  async fake100Accounts() {
+    await this.accountsService.fake100Accounts();
+    return { message: "Fake successfully!" };
+  }
+
   @Get(":id")
   @ForRoles([Role.ADMIN, Role.USER])
   @UseGuards(AuthGuard, RoleGuard)

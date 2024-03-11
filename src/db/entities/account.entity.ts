@@ -3,6 +3,7 @@ import { AccountDetail } from "./account-detail.entity";
 import { Role } from "../../auth/enums";
 import { Post } from "./post.entity";
 import { FriendRequest } from "./friend-request.entity";
+import { faker } from "@faker-js/faker";
 
 @Entity()
 export class Account {
@@ -30,4 +31,15 @@ export class Account {
 
     @OneToMany(() => FriendRequest, fr => fr.to)
     friendRequests: FriendRequest[];
+
+    static fakeOne(encryptedPassword: string) {
+        const detail = AccountDetail.fakeOne(faker.helpers.arrayElement(["female", "male"]));
+        
+        const account = new Account();
+        account.username = faker.internet.userName();
+        account.password = encryptedPassword;
+        account.detail = detail;
+
+        return account;
+    }
 }

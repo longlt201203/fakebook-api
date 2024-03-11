@@ -9,5 +9,6 @@ import { AuthModule } from '@auth';
   imports: [TypeOrmModule.forFeature([AccountRelationship, FriendRequest]), AuthModule],
   controllers: [RelationshipsController],
   providers: [RelationshipsService],
+  exports: [RelationshipsService]
 })
 export class RelationshipsModule {}
