@@ -24,7 +24,7 @@ export class PostsService {
     }
 
     findAll(dto: PostFilterDto) {
-        return this.postRepo.findAndCount({ relations: { author: { detail: true } }, take: dto.take, skip: dto.take*(dto.page-1) }); 
+        return this.postRepo.findAndCount({ order: { createdAt: "DESC" }, relations: { author: { detail: true } }, take: dto.take, skip: dto.take*(dto.page-1) }); 
     }
 
     findByAccountId(accountId: string, dto: PostFilterDto) {

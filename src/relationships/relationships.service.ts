@@ -3,7 +3,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRelationshipDto } from './dto/create-relationship.dto';
-import { AccountRelationshipType } from '@utils';
+import { AccountRelationshipType, Env } from '@utils';
 import { RelationshipFilterDto } from './dto/relationship-filter.dto';
 import { FriendRequestFilterDto } from './dto/friend-request-filter.dto';
 
@@ -88,6 +88,10 @@ export class RelationshipsService {
         if (!fr) {
             throw new NotFoundException("Friend request not found");
         }
+        const countFriends = await this.countFriends(accountId);
+        if (countFriends >= Env.MAX_FRIEND_ALLOW) {
+            throw new BadRequestException("Friend limit is reached!");
+        }
         const results = await Promise.all([
             this.createRelationShip({ accountA: accountId, accountB: fr.to.id, type: AccountRelationshipType.FRIEND }),
             this.removeFriendRequest(id)
@@ -132,13 +136,31 @@ export class RelationshipsService {
         return this.removeRelationship(relationship.id);
     }
 
+    countFriends(accountId: string) {
+        return this.accountRelationshipRepo.count({
+            where: [
+                {
+                    accountA: {
+                        id: accountId,
+                    },
+                    type: AccountRelationshipType.FRIEND
+                },
+                {
+                    accountB: {
+                        id: accountId
+                    },
+                    type: AccountRelationshipType.FRIEND
+                }
+            ]
+        });
+    }
+
     async getFriends(accountId: string, dto: RelationshipFilterDto): Promise<[Account[], number]> {
         const [relationships, count] = await this.accountRelationshipRepo.findAndCount({
             where: [
                 {
                     accountA: {
                         id: accountId,
-
                     },
                     type: AccountRelationshipType.FRIEND
                 },
@@ -188,5 +210,9 @@ export class RelationshipsService {
 
     getFriendRequests(accountId: string, dto: FriendRequestFilterDto) {
         return this.friendRequestRepo.findAndCount({ where: { to: { id: accountId } }, relations: { from: { detail: true } }, take: dto.take, skip: dto.take*(dto.page-1) });
+    }
+
+    getRequestedPeople(accountId: string) {
+        return this.friendRequestRepo.find({ where: { from: { id: accountId } }, relations: { to: true } });
     }
 }

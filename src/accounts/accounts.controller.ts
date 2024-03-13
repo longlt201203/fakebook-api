@@ -30,8 +30,7 @@ export class AccountsController {
   }
 
   @Get()
-  @ForRoles([Role.ADMIN])
-  @UseGuards(AuthGuard, RoleGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   async getAllAccounts(@Query() dto: AccountFilterDto) {
     const [accounts, count] = await this.accountsService.findAll(dto);

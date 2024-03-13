@@ -10,7 +10,6 @@ export const datasource = new DataSource({
     password: Env.DB_PASS,
     entities: [__dirname + "/entities/**/*.entity{.js,.ts}"],
     migrations: [__dirname + "/migrations/*{.ts,.js}"],
-    logging: "all"
 });
 
 // console.log(datasource.options);

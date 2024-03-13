@@ -16,4 +16,5 @@ export class Env {
     static readonly JWT_EXPIRE = process.env.JWT_EXPIRE || "";
     static readonly GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
     static readonly GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "";
+    static readonly MAX_FRIEND_ALLOW = parseInt(process.env.MAX_FRIEND_ALLOW || "500");
 }

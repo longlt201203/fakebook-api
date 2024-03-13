@@ -2,7 +2,7 @@ import { Account, AccountDetail } from '@entities';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAccountDto } from './dto/create-account.dto';
-import { FindOptionsRelations, Not, Repository } from 'typeorm';
+import { FindOptionsRelations, FindOptionsWhere, Like, Not, Repository } from 'typeorm';
 import { ValidationError } from 'class-validator';
 import { MyValidationError } from '@errors';
 import { CryptoService } from '@crypto';
@@ -113,7 +113,27 @@ export class AccountsService {
     }
 
     async findAll(filter: AccountFilterDto): Promise<[Account[], number]> {
-        const [accounts, count] = await this.accountRepo.findAndCount({ relations: { detail: true }, take: filter.take, skip: filter.take*(filter.page-1) });
+        let where: FindOptionsWhere<Account>[] = [];
+        if (filter.search) {
+            where = [
+                {
+                    username: Like(`%${filter.search}%`)
+                },
+                {
+                    detail: [
+                        { fname: Like(`%${filter.search}%`) },
+                        { lname: Like(`%${filter.search}%`) },
+                        { email: Like(`%${filter.search}%`) }
+                    ]
+                }
+            ];
+        }
+        const [accounts, count] = await this.accountRepo.findAndCount({
+            where: where,
+            relations: { detail: true },
+            take: filter.take,
+            skip: filter.take*(filter.page-1)
+        });
         return [accounts, count];
     }
 
